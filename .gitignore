@@ -1,0 +1,16 @@
+.idea
+
+/client/node_modules
+/client/.editorconfig
+/client/dist
+/client/.gitattributes
+/client/.prettierrc.json
+/client/eslint.config.js
+/client/jsconfig.json
+/client/vite.config.js
+
+/server/node_modules
+
+
+
+
