@@ -3,6 +3,7 @@
 
 <!--  <template v-else>-->
     <the-navbar />
+    <verify-email v-if="!authStore.isVerified" />
     <app-page v-if="!useStore().isLoading">
       <button :disabled="!authStore.isAuthenticated" class="btn primary" style="position: absolute; right: 20px; top: 20px"
               @click="store.isModalOpen = !store.isModalOpen">Создать
@@ -69,6 +70,7 @@ export default {
     }
   },
   components: {
+    VerifyEmail,
     // VerifyEmail,
     AppMessage,
     TheSidebar, TheNavbar,

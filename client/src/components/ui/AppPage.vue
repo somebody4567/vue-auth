@@ -1,8 +1,5 @@
 <template>
-  <div class="breadcrumbs">
-    Вернуться к списку заявок
-  </div>
-  <div class="card" style="position: relative; margin-top: 30px">
+  <div class="card" style="position: relative; margin-top: 30px; max-width: 1100px;">
     <h1 class="card-title">
       {{ title }}
       <slot name="header" />

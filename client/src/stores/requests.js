@@ -79,10 +79,16 @@ export const useRequestsStore = defineStore('filtering', () => {
         status: req.status.value,
         sum: req.sum.value,
       });
+      console.log(true)
       await getRequestsByID();
+      alertStore.changeAlert(true, 'primary', 'Заявка успешно создана!')
       useStore().setLoading(false);
-    } catch (e) {console.log(e); useStore().setLoading(false);}
-  }
+    } catch (e) {
+      console.log(e);
+      useStore().setLoading(false);
+      alertStore.changeAlert(true, 'danger', 'Что-то пошло не так...')
+    }
+}
 
   async function changeReqState(id, status) {
     try {

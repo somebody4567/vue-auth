@@ -5,12 +5,12 @@
     <h1>Войти в систему</h1>
     <div class="form-control" :class="{'error': errors.email, 'valid': isEmailValid}">
       <label for="email">Email</label>
-      <input v-model="email" type="email" id="email" v-bind="emailAttrs" @input="isFieldValid(isEmailValid, 'email')">
+      <input v-model="email" type="email" id="email" v-bind="emailAttrs" @input="isFieldValid('email')">
       <small v-if="errors.email">{{ errors.email }}</small>
     </div>
     <div class="form-control" :class="{'error': errors.password, 'valid': isPasswordValid}">
       <label for="password">Пароль</label>
-      <input v-model="password" type="password" id="password" v-bind="passwordAttrs" @input="isFieldValid(isPasswordValid, 'password')">
+      <input v-model="password" type="password" id="password" v-bind="passwordAttrs" @input="isFieldValid('password')">
       <small v-if="errors.password">{{ errors.password }}</small>
     </div>
     <button class="btn primary" type="submit" @click="login" :disabled="store.isLoading">
@@ -58,7 +58,7 @@ export default {
     const [password, passwordAttrs] = defineField('password');
 
     // Если поле валидно - показываем это(класс valid)
-    async function isFieldValid(field, validate) {
+    async function isFieldValid(validate) {
       if (validate === 'email') {
         isEmailValid.value = (await validateField(validate)).valid
       } else if (validate === 'password') {
@@ -74,7 +74,6 @@ export default {
       if (meta.value.valid) {
         return true
       } else {
-        console.log();
         if (!isEmailValid.value) setFieldError('email', 'Заполните поле');
         if (!isPasswordValid.value) setFieldError('password', 'Заполните поле');
       }
@@ -105,37 +104,5 @@ export default {
 }
 </script>
 
-<style scoped>
-.error input {
-  border: 2px solid #e53935;
-}
-
-.error input:focus {
-  border: 2px solid #e53935;
-}
-
-.error small {
-  color: #e53935;
-}
-
-.error label {
-  color: #e53935;
-}
-
-.valid input {
-  border: 2px solid #42b983;
-}
-
-.valid input:focus {
-  border: 2px solid #42b983;
-}
-
-.valid small {
-  color: #42b983;
-}
-
-.valid label {
-  color: #42b983;
-}
-</style>
+<style scoped></style>
 

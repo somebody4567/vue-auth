@@ -520,3 +520,36 @@ h3 {
 .question-title {
     font-weight: bold;
 }
+
+/*Стили для формы*/
+.error input {
+  border: 2px solid #e53935;
+}
+
+.error input:focus {
+  border: 2px solid #e53935;
+}
+
+.error small {
+  color: #e53935;
+}
+
+.error label {
+  color: #e53935;
+}
+
+.valid input {
+  border: 2px solid #42b983;
+}
+
+.valid input:focus {
+  border: 2px solid #42b983;
+}
+
+.valid small {
+  color: #42b983;
+}
+
+.valid label {
+  color: #42b983;
+}

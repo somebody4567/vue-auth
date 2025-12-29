@@ -1,6 +1,7 @@
 const Router = require('express').Router;
 const userController = require('../controllers/user-controller');
 const requestController = require('../controllers/request-controller');
+const mailController = require('../controllers/mail-controller');
 const router = new Router();
 const {body} = require('express-validator');
 const authMiddleware = require('../middlewares/auth-middleware');
@@ -23,7 +24,7 @@ router.get('/requests/:userID', requestController.getRequestsById);
 router.get('/request/:reqID', requestController.getRequestById);
 
 // Отправка письма по почте
-// router.post('/mail');
+router.post('/mail', mailController.sendMail);
 
 module.exports = router
 
