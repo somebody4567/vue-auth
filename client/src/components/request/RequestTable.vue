@@ -14,9 +14,9 @@
     <tbody>
       <tr v-for="(item, i) in requests" :key="item._id">
         <th>{{ i + 1 }}</th>
-        <th>{{ item.fullName }}</th>
-        <th>{{ item.telephone }}</th>
-        <th>{{ item.sum }}</th>
+        <th :title="item.fullName">{{ item.fullName.length > 20 ? item.fullName.slice(0, 25) + '...' : item.fullName }}</th>
+        <th :title="item.telephone">{{ item.telephone }}</th>
+        <th :title="item.sum">{{ item.sum }}</th>
         <th><app-status :type="item.status" /></th>
         <th>
           <router-link :to="'/request/' + item._id" v-slot="{ navigate }" custom

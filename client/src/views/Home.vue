@@ -3,7 +3,7 @@
 
 <!--  <template v-else>-->
     <the-navbar />
-    <app-page v-if="!useStore().isLoading && requestsStore.requests.length">
+    <app-page v-if="!useStore().isLoading">
       <button :disabled="!authStore.isAuthenticated" class="btn primary" style="position: absolute; right: 20px; top: 20px"
               @click="store.isModalOpen = !store.isModalOpen">Создать
       </button>
@@ -50,12 +50,6 @@ export default {
 
     const isModalOpen = ref(false);
 
-    // authStore.$subscribe(async (mutation) => {
-    //   if (mutation.events.newValue.id) {
-    //     await requestsStore.getRequestsByID();
-    //   }
-    // });
-
     onMounted(async () => {
       useStore().setLoading(true);
       authStore.$subscribe(async (mutation) => {
@@ -75,7 +69,7 @@ export default {
     }
   },
   components: {
-    VerifyEmail,
+    // VerifyEmail,
     AppMessage,
     TheSidebar, TheNavbar,
     AppPage, RequestTable,

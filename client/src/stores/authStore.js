@@ -5,8 +5,10 @@ import { $app } from '@/http/axios.js'
 import router from "@/router/index.js";
 import {errorHandling} from "@/utils/errorHandling.js";
 import {useStore} from '@/stores/store.js'
+import {useAlertStore} from "@/stores/alertStore.js";
 
 export const useAuthStore = defineStore('auth', () => {
+  const alertStore = useAlertStore();
   let token = ref(localStorage.getItem('token'))
   let error = ref(null);
   let user = ref({});
@@ -57,7 +59,9 @@ export const useAuthStore = defineStore('auth', () => {
         useStore().setLoading(false);
         await router.push('/requests')
       }
-    } catch (e) { useStore().setLoading(false); console.error(e) }
+    } catch (e) { useStore().setLoading(false);
+      alertStore.changeAlert(true, 'danger', e.response.data.message);
+    }
 
     return res;
   }
@@ -75,14 +79,16 @@ export const useAuthStore = defineStore('auth', () => {
       useStore().setLoading(true);
       res = await $app.post('/api/registration', {email, password});
       user.value = res.data.user;
-      console.log(res);
       if (res.status === 200) {
         createToken(res.data.accessToken);
         setAuthStatus(true);
         useStore().setLoading(false);
         await router.push('/requests')
       }
-    } catch (e) { useStore().setLoading(false); console.error(e) }
+      console.log(res)
+    } catch (e) { useStore().setLoading(false);
+      alertStore.changeAlert(true, 'danger', e.response.data.message);
+    }
 
     return res;
   }
