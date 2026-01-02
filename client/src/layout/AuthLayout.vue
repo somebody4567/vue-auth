@@ -1,6 +1,8 @@
 <template>
   <div class="container">
-    <app-message v-if="useAlertStore().alert.show" :type="useAlertStore().alert.type" :text="useAlertStore().alert.text" />
+    <teleport to="body">
+      <app-message v-if="useAlertStore().alert.show" :type="useAlertStore().alert.type" :text="useAlertStore().alert.text" />
+    </teleport>
     <router-view />
   </div>
 </template>

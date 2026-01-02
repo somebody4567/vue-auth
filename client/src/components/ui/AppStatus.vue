@@ -8,21 +8,20 @@ import {ref} from "vue";
 
 export default {
 setup(props) {
-  const text = ref('');
-  const styles = ref('');
-  if (props.type === 'active') {
-    text.value = 'Активен';
-    styles.value = 'primary'
-  } else if (props.type === 'done') {
-    text.value = 'Выполнен';
-    styles.value = 'primary';
-  } else if (props.type === 'canceled') {
-    text.value = 'Отменен';
-    styles.value = 'danger';
-  } else if (props.type === 'inProgress') {
-    text.value = 'Выполняется';
-    styles.value = 'warning'
-  }
+  const textMap = {
+    active: 'Активен',
+    done: 'Выполнен',
+    canceled: 'Отменен',
+    inProgress: 'Выполняется'
+  };
+  const stylesMap = {
+    active: 'primary',
+    done: 'primary',
+    canceled: 'danger',
+    inProgress: 'warning'
+  };
+  const text = ref(textMap[props.type]);
+  const styles = ref(stylesMap[props.type]);
 
   return {
     text,

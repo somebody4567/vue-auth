@@ -17,7 +17,6 @@ app.mount('#app');
 
 (async () => {
   try {
-    useStore().setLoading(true);
     if (localStorage.getItem('token')) {
       // Получение данных пользователя после перезагрузки страницы
       const res = await $app.get('/api/refresh', {withCredentials: true});
@@ -27,7 +26,6 @@ app.mount('#app');
       console.log(res.data.user)
       useAuthStore().setVerificationStatus(res.data.user.isActivated)
     }
-    useStore().setLoading(false);
-  } catch (e) { console.warn(e); useStore().setLoading(false);}
+  } catch (e) { console.warn(e);}
 })()
 

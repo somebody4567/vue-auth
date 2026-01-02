@@ -1,6 +1,6 @@
 <template>
-  <app-loader v-if="store.isLoading"></app-loader>
-  <app-page title="Заявка" v-if="item && !store.isLoading">
+  <app-loader v-if="loading"></app-loader>
+  <app-page title="Заявка" v-if="item && !loading">
     <p><strong>Имя владельца:</strong> {{ item.fullName }}</p>
     <p><strong>Телефон:</strong> {{ item.telephone }}</p>
     <p><strong>Сумма:</strong> {{ item.sum }}</p>
@@ -17,39 +17,45 @@
     </div>
 
     <button class="btn danger" @click="requestsStore.deleteUser(id)">Удалить</button>
-    <button class="btn" @click="requestsStore.changeReqState(id, status)">Обновить</button>
-    <!--    <app-message />-->
+    <button class="btn" v-if="isChanged" @click="requestsStore.changeReqState(id, status)">Обновить</button>
   </app-page>
 </template>
 
 <script>
-import { ref, isReactive, onMounted, reactive } from 'vue'
+import { ref, onMounted, watch } from 'vue'
 import { useStore } from '@/stores/store.js'
 import { useAlertStore } from '@/stores/alertStore.js'
 import { useRequestsStore } from '@/stores/requests.js'
 
 import AppPage from '@/components/ui/AppPage.vue'
-import AppMessage from '@/components/ui/AppMessage.vue'
 import AppStatus from '@/components/ui/AppStatus.vue'
-import AppLoader from "@/components/ui/AppLoader.vue";
-import { useAuthStore } from '@/stores/authStore.js'
+import AppLoader from '@/components/ui/AppLoader.vue'
 
 export default {
   setup({ id }) {
-    const store = useStore()
-    const alertStore = useAlertStore()
-    const requestsStore = useRequestsStore()
-    let item = ref(null)
-    let status = ref(null)
+    const store = useStore();
+    const alertStore = useAlertStore();
+    const requestsStore = useRequestsStore();
+    let item = ref(null);
+    let status = ref(null);
+
+    let loading = ref(false);
+    let isChanged = ref(false)
 
     onMounted(async () => {
-      item.value = (await requestsStore.getRequestByID(id)).data.data;
+      loading.value = true
+      item.value = (await requestsStore.getRequestByID(id)).data.data
       status.value = item.value.status
+      loading.value = false
+
+      watch(status, () => {
+        isChanged.value = true
+      })
     })
 
-    return { item, store, status, alertStore, requestsStore }
+    return { item, store, status, alertStore, requestsStore, loading, isChanged }
   },
-  components: { AppPage, AppMessage, AppStatus, AppLoader },
+  components: { AppPage, AppStatus, AppLoader },
   props: ['id'],
 
   // beforeRouteEnter(to, from, next) {

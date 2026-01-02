@@ -8,7 +8,6 @@
 
 <script>
 // телепортировать message в конец body
-import { useStore } from "@/stores/store.js";
 import {onMounted, onUnmounted, onUpdated} from "vue";
 import {useAlertStore} from "@/stores/alertStore.js";
 

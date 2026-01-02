@@ -28,27 +28,32 @@ export const useRequestsStore = defineStore('filtering', () => {
   }
 
   // фильтрация запросов при вводе в поле с именем и статусом
-  function filterRequests() {
-    return computed(() => {
-      return requests.value.filter(item => {
-        if (nameFilter.value !== '' && statusFilter.value !== '') {
-          if (item.fullName.toLowerCase().startsWith(nameFilter.value.toLowerCase()) && item.status === statusFilter.value) {
-            return item
-          }
-        } else if (nameFilter.value === '' && statusFilter.value !== '') {
-          if (item.status === statusFilter.value) {
-            return item
-          }
-        } else if (nameFilter.value !== '' && statusFilter.value === '') {
-          if (item.fullName.toLowerCase().startsWith(nameFilter.value.toLowerCase())) {
-            return item
-          }
-        } else if (nameFilter.value === '' && statusFilter.value === '') {
-          return item
-        }
-      })
-    })
-  }
+  // function filterRequests() {
+  //   return computed(() => {
+  //     return requests.value.filter(item => {
+  //       if (nameFilter.value !== '' && statusFilter.value !== '') {
+  //         if (item.fullName.toLowerCase().startsWith(nameFilter.value.toLowerCase()) && item.status === statusFilter.value) {
+  //           return item
+  //         }
+  //       } else if (nameFilter.value === '' && statusFilter.value !== '') {
+  //         if (item.status === statusFilter.value) {
+  //           return item
+  //         }
+  //       } else if (nameFilter.value !== '' && statusFilter.value === '') {
+  //         if (item.fullName.toLowerCase().startsWith(nameFilter.value.toLowerCase())) {
+  //           return item
+  //         }
+  //       } else if (nameFilter.value === '' && statusFilter.value === '') {
+  //         return item
+  //       }
+  //     })
+  //   })
+  // }
+  // function filterRequests() {
+  //   return computed(() => {
+  //     return requests.value.filter(item => console.log(item))
+  //   })
+  // }
 
   async function getRequestsByID() {
     try {
@@ -58,19 +63,14 @@ export const useRequestsStore = defineStore('filtering', () => {
   }
 
   async function getRequestByID(id) {
-    useStore().setLoading(true);
     let res;
     try {
       res = await $app.get('/api/request/' + id);
-      console.log(res)
     } catch (e) {console.log(e)}
-    useStore().setLoading(false);
     return res;
   }
 
   async function addNewRequest(req) {
-    useStore().setLoading(true);
-
     try {
       await $app.post('/api/request', {
         userID: req.userID,
@@ -79,13 +79,10 @@ export const useRequestsStore = defineStore('filtering', () => {
         status: req.status.value,
         sum: req.sum.value,
       });
-      console.log(true)
       await getRequestsByID();
       alertStore.changeAlert(true, 'primary', 'Заявка успешно создана!')
-      useStore().setLoading(false);
     } catch (e) {
       console.log(e);
-      useStore().setLoading(false);
       alertStore.changeAlert(true, 'danger', 'Что-то пошло не так...')
     }
 }
