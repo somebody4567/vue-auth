@@ -48,7 +48,7 @@ export const useRequestsStore = defineStore('filtering', () => {
 
   async function getRequestsByID() {
     try {
-      const res = await $app.get('/api/requests/' + useAuthStore().user.id);
+      const res = await $app.get('/requests/' + useAuthStore().user.id);
       setRequests(res.data.data)
     } catch (e) {console.error(e)}
   }
@@ -56,14 +56,14 @@ export const useRequestsStore = defineStore('filtering', () => {
   async function getRequestByID(id) {
     let res;
     try {
-      res = await $app.get('/api/request/' + id);
+      res = await $app.get('/request/' + id);
     } catch (e) {console.log(e)}
     return res;
   }
 
   async function addNewRequest(req) {
     try {
-      await $app.post('/api/request', {
+      await $app.post('/request', {
         userID: req.userID,
         fullName: req.name.value,
         telephone: req.phone.value,
@@ -80,7 +80,7 @@ export const useRequestsStore = defineStore('filtering', () => {
 
   async function changeReqState(id, status) {
     try {
-      await $app.patch('/api/request/' + id, { status });
+      await $app.patch('/request/' + id, { status });
       await router.push('/requests');
       alertStore.changeAlert(true, 'warning', 'Статус заявки обновлен!');
     } catch (e) { console.log(e) }
@@ -88,7 +88,7 @@ export const useRequestsStore = defineStore('filtering', () => {
 
   async function deleteUser(id) {
     try {
-      await $app.delete('/api/request/' + id);
+      await $app.delete('/request/' + id);
       await router.push('/requests');
       alertStore.changeAlert(true, 'danger', 'Заявка удалена!');
     } catch (e) {console.log(e)}

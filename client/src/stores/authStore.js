@@ -39,7 +39,7 @@ export const useAuthStore = defineStore('auth', () => {
   async function login({email, password}) {
     let res;
     try {
-      res = await $app.post('/api/login', {email, password});
+      res = await $app.post('/login', {email, password});
       user.value = res.data.user;
       if (res.status === 200) {
         createToken(res.data.accessToken);
@@ -54,7 +54,7 @@ export const useAuthStore = defineStore('auth', () => {
   }
 
   async function logout() {
-    const res = await $app.post('/api/logout');
+    const res = await $app.post('/logout');
     resetToken();
     setAuthStatus(false);
     return res
@@ -63,7 +63,7 @@ export const useAuthStore = defineStore('auth', () => {
   async function registration({ email, password }) {
     let res;
     try {
-      res = await $app.post('/api/registration', {email, password});
+      res = await $app.post('/registration', {email, password});
       user.value = res.data.user;
       if (res.status === 200) {
         createToken(res.data.accessToken);
