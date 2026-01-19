@@ -93,11 +93,11 @@ async function createPerson() {
     const req = { userID: authStore.user.id, name, phone, sum, status }
     try {
       await requestsStore.addNewRequest(req);
+      emits('close')
     } catch (e) {
       console.error(e)
     }
   }
-  emits('close')
   loading.value = false;
 }
 </script>
