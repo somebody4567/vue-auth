@@ -3,10 +3,10 @@ import router from '@/router/index.js'
 import { useAuthStore } from '@/stores/authStore.js'
 
 const URL = 'http://localhost:5000'
-
+console.log(import.meta.env.VUE_APP_API_URL)
 export const $app = axios.create({
   withCredentials: true,
-  baseURL: URL
+  baseURL: process.env.VUE_APP_API_URL || 'http://localhost:5000'
 })
 
 $app.interceptors.request.use((config) => {
