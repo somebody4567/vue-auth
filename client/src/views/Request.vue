@@ -21,38 +21,46 @@
   </app-page>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, onMounted, watch } from 'vue'
-import { useRequestsStore } from '@/stores/requests.js'
-import { useAlertStore } from '@/stores/alertStore.js'
-import { formatCurrency } from '@/utils/currency.js'
+import { useRequestsStore } from '@/stores/requests'
+import { useAlertStore } from '@/stores/alertStore'
+import { formatCurrency } from '@/utils/currency'
 
 import AppPage from '@/components/ui/AppPage.vue'
 import AppStatus from '@/components/ui/AppStatus.vue'
 import AppLoader from '@/components/ui/AppLoader.vue'
-import router from '@/router/index.js'
+import router from '@/router/index'
+import { IRequest, TRequestStatus } from '@/types/types'
 
-const props = defineProps({
-  id: String
-})
-const requestsStore = useRequestsStore();
-const alertStore = useAlertStore();
-let item = ref(null);
-let status = ref(null);
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-let loading = ref(false);
+const props = defineProps<{
+  id: string
+}>()
+const requestsStore = useRequestsStore()
+const alertStore = useAlertStore()
+let item = ref<IRequest | undefined>(undefined)
+let status = ref<TRequestStatus | null>(null)
+
+let loading = ref(false)
 let isChanged = ref(false)
 
 async function changeState() {
+  if (!status.value) throw new Error('У ошибки отсутствует статус!')
+
   await requestsStore.changeReqState(props.id, status.value)
-  await router.push('/requests');
-  alertStore.changeAlert(true, 'warning', 'Статус заявки обновлен!');
+  await router.push('/requests')
+  alertStore.changeAlert(true, 'warning', 'Статус заявки обновлен!')
 }
 
 onMounted(async () => {
   loading.value = true
-  item.value = (await requestsStore.getRequestByID(props.id)).data.data
+
+  item.value = await requestsStore.getRequestByID(props.id)
+  if (!item.value) return
   status.value = item.value.status
+
   loading.value = false
 
   watch(status, () => {

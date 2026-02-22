@@ -1,6 +1,6 @@
 <template>
   <teleport to="body">
-    <div class='alert' :class="type">
+    <div class="alert" :class="type">
       <p class="alert-title">{{ text }}</p>
       <p></p>
       <span class="alert-close" @click="alertStore.closeAlert()">&times;</span>
@@ -8,21 +8,21 @@
   </teleport>
 </template>
 
-<script setup>
-import {onMounted, onUnmounted} from "vue";
-import {useAlertStore} from "@/stores/alertStore.js";
+<script setup lang="ts">
+import { onMounted, onUnmounted } from 'vue'
+import { useAlertStore } from '@/stores/alertStore'
 
-defineProps({
-  type : String,
-  text: String
-})
+defineProps<{
+  type?: string
+  text?: string
+}>()
 
-const alertStore = useAlertStore();
-let timer = null;
+const alertStore = useAlertStore()
+let timer: number | null = null
 
 onMounted(() => {
   timer = setTimeout(() => alertStore.closeAlert(), 5000)
-});
+})
 
 onUnmounted(() => {
   // Очищаем таймер при размонтировании компонента

@@ -1,5 +1,5 @@
 <template>
-  <verify-email v-if="!authStore.isVerified" />
+  <!-- <verify-email v-if="!authStore.isVerified" /> -->
   <app-page v-if="!loading">
     <button
       :disabled="!authStore.isAuthenticated"
@@ -27,11 +27,11 @@
   </teleport>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { onMounted, ref } from 'vue'
-import { useAlertStore } from '@/stores/alertStore.js'
-import { useAuthStore } from '@/stores/authStore.js'
-import { useRequestsStore } from '@/stores/requests.js'
+import { useAlertStore } from '@/stores/alertStore'
+import { useAuthStore } from '@/stores/authStore'
+import { useRequestsStore } from '@/stores/requests'
 
 import AppPage from '../components/ui/AppPage.vue'
 import RequestTable from '../components/request/RequestTable.vue'
@@ -57,16 +57,13 @@ function closeModal() {
 
 onMounted(async () => {
   loading.value = true
-  authStore.$subscribe(async (mutation) => {
-    if (mutation.events.newValue.id) {
-      await useRequestsStore().getRequestsByID()
-    }
-  })
+
   try {
     await useRequestsStore().getRequestsByID()
   } catch (e) {
     console.log(e)
   }
+
   loading.value = false
 })
 </script>

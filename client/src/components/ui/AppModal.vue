@@ -7,14 +7,13 @@
   </div>
 </template>
 
-<script setup>
-
-defineEmits(['close'])
-defineProps({
-  title: String
-})
+<script setup lang="ts">
+defineEmits<{
+  (e: 'close'): void
+}>()
+defineProps<{
+  title: string
+}>()
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

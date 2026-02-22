@@ -99,8 +99,8 @@
 import { onMounted, ref, watch, computed } from 'vue'
 import { VueDraggableNext as draggable } from 'vue-draggable-next'
 import DragNDropCard from '../components/drag-n-drop/DragNDropCard.vue'
-import { useRequestsStore } from '@/stores/requests.js'
-import {useAuthStore} from '@/stores/authStore.js'
+import { useRequestsStore } from '@/stores/requests.ts'
+import {useAuthStore} from '@/stores/authStore.ts'
 import AppLoader from '@/components/ui/AppLoader.vue'
 
 const requestsStore = useRequestsStore()

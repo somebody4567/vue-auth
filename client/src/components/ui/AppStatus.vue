@@ -1,32 +1,34 @@
 <template>
-  <span class='badge' :class="styles">{{ text }}</span>
+  <span class="badge" :class="styles">{{ text }}</span>
 </template>
 
-<script setup>
-import {ref} from "vue";
+<script setup lang="ts">
+import { ref } from 'vue'
+
+//!!!!!!!!
 
 const props = defineProps({
   type: {
     type: String,
-    validate(value) {
+    validate(value: string): boolean {
       return ['active', 'done', 'canceled', 'inProgress'].includes(value)
-    }
-  }
+    },
+  },
 })
 const textMap = {
   active: 'Активен',
   done: 'Завершен',
   canceled: 'Отменен',
-  inProgress: 'Выполняется'
-};
+  inProgress: 'Выполняется',
+} as const
 const stylesMap = {
   active: 'primary',
   done: 'primary',
   canceled: 'danger',
-  inProgress: 'warning'
-};
-const text = ref(textMap[props.type]);
-const styles = ref(stylesMap[props.type]);
+  inProgress: 'warning',
+} as const
+const text = ref(textMap[props.type])
+const styles = ref(stylesMap[props.type])
 </script>
 
 <style scoped></style>

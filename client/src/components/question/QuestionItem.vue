@@ -5,14 +5,15 @@
   </div>
 </template>
 
-<script setup>
-import { ref } from "vue";
+<script setup lang="ts">
+import { ref } from 'vue'
+import { IQuestionPropObject } from '@/types/types'
 
-defineProps({
-  question: Object
-})
-const isOpen = ref(false);
+defineProps<{
+  question: IQuestionPropObject
+}>()
 
+const isOpen = ref(false)
 </script>
 
 <style scoped></style>

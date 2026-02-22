@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-
+import { useAuthStore } from '@/stores/authStore'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -9,8 +9,14 @@ const router = createRouter({
       component: () => import('@/views/Home.vue'),
       meta: {
         layout: 'main',
-        auth: true
-      }
+        auth: true,
+      },
+      beforeEnter: async () => {
+        if (await useAuthStore().keepUserLoggedIn()) {
+          console.log(useAuthStore().user)
+          return true
+        }
+      },
     },
     {
       path: '/help',
@@ -18,8 +24,8 @@ const router = createRouter({
       component: () => import('@/views/Help.vue'),
       meta: {
         layout: 'main',
-        auth: true
-      }
+        auth: true,
+      },
     },
     {
       path: '/request/:id?',
@@ -28,8 +34,8 @@ const router = createRouter({
       props: true,
       meta: {
         layout: 'main',
-        auth: true
-      }
+        auth: true,
+      },
     },
     {
       path: '/auth',
@@ -37,8 +43,8 @@ const router = createRouter({
       component: () => import('@/views/Auth.vue'),
       meta: {
         layout: 'auth',
-        auth: false
-      }
+        auth: false,
+      },
     },
     {
       path: '/:notFound(.*)',
@@ -57,16 +63,16 @@ const router = createRouter({
     },
   ],
   linkActiveClass: 'active',
-  linkExactActiveClass: 'active'
+  linkExactActiveClass: 'active',
 })
 
-router.beforeEach((to, from, next) => {
-  const isAuthRequired = to.meta.auth;
+router.beforeEach((to, _, next) => {
+  const isAuthRequired = to.meta.auth
 
   if (!localStorage.getItem('token') && isAuthRequired) {
     next('/auth?message=auth')
   } else {
-    next();
+    next()
   }
 })
 

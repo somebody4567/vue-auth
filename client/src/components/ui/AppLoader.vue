@@ -2,10 +2,10 @@
   <div class="loader" :class="type"></div>
 </template>
 
-<script setup>
-defineProps({
-  type: String
-})
+<script setup lang="ts">
+defineProps<{
+  type?: 'primary small'
+}>()
 </script>
 
 <style scoped>
@@ -19,5 +19,4 @@ defineProps({
   width: 2em;
   height: 2em;
 }
-
 </style>

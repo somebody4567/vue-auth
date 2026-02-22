@@ -21,7 +21,11 @@
         </router-link>
       </div>
     </nav>
-    <div class="flex md:hidden navbar-close text-4xl" :class="{'active': showNav}" @click="showNav = !showNav">
+    <div
+      class="flex md:hidden navbar-close text-4xl"
+      :class="{ active: showNav }"
+      @click="showNav = !showNav"
+    >
       <span></span>
       <span></span>
       <span></span>
@@ -29,7 +33,10 @@
   </header>
 
   <!--    мобильная версия fixed-->
-  <nav v-if="showNav" class="navbar-menu flex flex-col justify-between items-center fixed top-0 left-0 w-full h-full bg-white z-10 py-15 text-xl">
+  <nav
+    v-if="showNav"
+    class="navbar-menu flex flex-col justify-between items-center fixed top-0 left-0 w-full h-full bg-white z-10 py-15 text-xl"
+  >
     <div @click="showNav = false">
       <router-link to="/requests">Заявки</router-link>
     </div>
@@ -51,16 +58,18 @@
 </template>
 
 <script setup>
-import { ref} from 'vue'
-import { useStore } from "@/stores/store.js";
-import { useAuthStore } from "@/stores/authStore.js";
+import { ref } from 'vue'
+import { useStore } from '@/stores/store.ts'
+import { useAuthStore } from '@/stores/authStore.ts'
 
-const store = useStore();
-const authStore = useAuthStore();
-let showNav = ref(false);
+const store = useStore()
+const authStore = useAuthStore()
+let showNav = ref(false)
+
+//!!!!!!!!!!!!!!!!
 
 function logout(navigate) {
-  authStore.logout();
+  authStore.logout()
   navigate()
 }
 </script>

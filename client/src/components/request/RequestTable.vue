@@ -29,7 +29,7 @@
 </template>
 
 <script setup>
-import { formatCurrency } from '@/utils/currency.js'
+import { formatCurrency } from '@/utils/currency.ts'
 import AppStatus from '@/components/ui/AppStatus.vue'
 
 defineProps({

@@ -9,10 +9,10 @@
   </div>
 </template>
 
-<script setup>
-defineProps({
-  title: String
-})
+<script setup lang="ts">
+defineProps<{
+  title?: string
+}>()
 </script>
 
 <style scoped></style>

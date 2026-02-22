@@ -16,19 +16,19 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 defineProps({
   ticket: {
     type: Object,
-    required: true
-  }
+    required: true,
+  },
 })
 
-const formatPhone = (phone) => {
+const formatPhone = (phone?: string) => {
   if (!phone) return ''
   const cleaned = phone.replace(/\D/g, '')
   if (cleaned.length === 11) {
-    return `+${cleaned[0]} (${cleaned.slice(1,4)}) ${cleaned.slice(4,7)}-${cleaned.slice(7,9)}-${cleaned.slice(9)}`
+    return `+${cleaned[0]} (${cleaned.slice(1, 4)}) ${cleaned.slice(4, 7)}-${cleaned.slice(7, 9)}-${cleaned.slice(9)}`
   }
   return phone
 }
@@ -65,7 +65,8 @@ const formatPhone = (phone) => {
 
 /* Основное содержимое */
 
-.contact-name, .contact-phone {
+.contact-name,
+.contact-phone {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -73,7 +74,8 @@ const formatPhone = (phone) => {
   font-size: 12px;
 }
 
-.contact-name .label, .contact-phone .label {
+.contact-name .label,
+.contact-phone .label {
   color: #6b7280;
   font-weight: 500;
 }

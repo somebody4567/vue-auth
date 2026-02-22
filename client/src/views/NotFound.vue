@@ -8,7 +8,7 @@
   </app-page>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import AppPage from '@/components/ui/AppPage.vue'
 </script>
 
@@ -19,4 +19,3 @@ import AppPage from '@/components/ui/AppPage.vue'
   line-height: 1.6;
 }
 </style>
-
